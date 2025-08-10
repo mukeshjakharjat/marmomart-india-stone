@@ -33,8 +33,7 @@ const Index = () => {
   }
 
   const handleCartClick = () => {
-    // TODO: Implement cart functionality
-    console.log("Cart clicked")
+    navigate("/cart")
   }
 
   return (

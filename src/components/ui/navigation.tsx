@@ -36,11 +36,11 @@ export function Navigation({
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <Button variant="ghost" className="text-base">Marble</Button>
-            <Button variant="ghost" className="text-base">Ceramic Tiles</Button>
-            <Button variant="ghost" className="text-base">Porcelain</Button>
-            <Button variant="ghost" className="text-base">Decorative</Button>
-            <Button variant="ghost" className="text-base">Natural Stone</Button>
+            <a href="/products" className="text-foreground hover:text-primary transition-colors">Marble</a>
+            <a href="/products" className="text-foreground hover:text-primary transition-colors">Ceramic Tiles</a>
+            <a href="/products" className="text-foreground hover:text-primary transition-colors">Porcelain</a>
+            <a href="/products" className="text-foreground hover:text-primary transition-colors">Decorative</a>
+            <a href="/products" className="text-foreground hover:text-primary transition-colors">Natural Stone</a>
           </nav>
 
           {/* Search Bar */}
