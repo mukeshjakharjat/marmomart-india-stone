@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { 
@@ -6,6 +7,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { 
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { ShoppingCart, User, Menu, Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 
@@ -22,6 +30,7 @@ export function Navigation({
   onCartClick,
   cartItemsCount = 0 
 }: NavigationProps) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (
     <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -94,9 +103,116 @@ export function Navigation({
             )}
 
             {/* Mobile Menu */}
-            <Button variant="ghost" size="icon" className="lg:hidden">
-              <Menu className="h-5 w-5" />
-            </Button>
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="lg:hidden">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-80">
+                <SheetHeader>
+                  <SheetTitle>MarmoMart</SheetTitle>
+                </SheetHeader>
+                
+                <div className="mt-6 space-y-6">
+                  {/* Mobile Search */}
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input 
+                      placeholder="Search products..." 
+                      className="pl-10"
+                    />
+                  </div>
+
+                  {/* Mobile Navigation Links */}
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                      Categories
+                    </h3>
+                    <div className="space-y-2">
+                      <a 
+                        href="/products" 
+                        className="block py-2 text-foreground hover:text-primary transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Marble
+                      </a>
+                      <a 
+                        href="/products" 
+                        className="block py-2 text-foreground hover:text-primary transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Ceramic Tiles
+                      </a>
+                      <a 
+                        href="/products" 
+                        className="block py-2 text-foreground hover:text-primary transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Porcelain
+                      </a>
+                      <a 
+                        href="/products" 
+                        className="block py-2 text-foreground hover:text-primary transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Decorative
+                      </a>
+                      <a 
+                        href="/products" 
+                        className="block py-2 text-foreground hover:text-primary transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Natural Stone
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Mobile Actions */}
+                  <div className="space-y-4 pt-4 border-t">
+                    <Button 
+                      onClick={() => {
+                        onCartClick()
+                        setMobileMenuOpen(false)
+                      }}
+                      variant="outline" 
+                      className="w-full justify-start"
+                    >
+                      <ShoppingCart className="h-4 w-4 mr-2" />
+                      Cart ({cartItemsCount})
+                    </Button>
+                    
+                    {isAuthenticated ? (
+                      <div className="space-y-2">
+                        <Button variant="ghost" className="w-full justify-start">
+                          <User className="h-4 w-4 mr-2" />
+                          Profile
+                        </Button>
+                        <Button variant="ghost" className="w-full justify-start">
+                          Orders
+                        </Button>
+                        <Button variant="ghost" className="w-full justify-start">
+                          Addresses
+                        </Button>
+                        <Button variant="ghost" className="w-full justify-start text-destructive">
+                          Logout
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button 
+                        onClick={() => {
+                          onAuthClick()
+                          setMobileMenuOpen(false)
+                        }}
+                        className="w-full"
+                      >
+                        Login
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
