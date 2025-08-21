@@ -2,6 +2,10 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Navigation } from "@/components/ui/navigation"
 import { HeroSection } from "@/components/ui/hero-section"
+import { FeaturedProducts } from "@/components/sections/FeaturedProducts"
+import { Categories } from "@/components/sections/Categories"
+import { Testimonials } from "@/components/sections/Testimonials"
+import { Footer } from "@/components/sections/Footer"
 import { supabase } from "@/integrations/supabase/client"
 import type { User, Session } from "@supabase/supabase-js"
 
@@ -46,8 +50,11 @@ const Index = () => {
       />
       <main>
         <HeroSection />
-        {/* TODO: Add product catalog, featured products, etc. */}
+        <FeaturedProducts />
+        <Categories />
+        <Testimonials />
       </main>
+      <Footer />
     </div>
   );
 };
