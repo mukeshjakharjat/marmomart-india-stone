@@ -156,8 +156,8 @@ const Products = () => {
       
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar */}
-          <div className="lg:w-64 flex-shrink-0">
+          {/* Filters Sidebar - Hidden on Mobile */}
+          <div className="hidden lg:block lg:w-64 flex-shrink-0">
             <ProductFilters
               categories={categories}
               selectedCategory={selectedCategory}
@@ -169,6 +169,17 @@ const Products = () => {
 
           {/* Main Content */}
           <div className="flex-1">
+            {/* Mobile Filters */}
+            <div className="lg:hidden">
+              <ProductFilters
+                categories={categories}
+                selectedCategory={selectedCategory}
+                onCategoryChange={setSelectedCategory}
+                sortBy={sortBy}
+                onSortChange={setSortBy}
+              />
+            </div>
+
             {/* Search and View Controls */}
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <div className="relative flex-1">
