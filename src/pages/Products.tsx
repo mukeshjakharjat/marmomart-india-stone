@@ -9,6 +9,25 @@ import { Search, Grid, List } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { useToast } from "@/hooks/use-toast"
 import type { User, Session } from "@supabase/supabase-js"
+import { sampleProducts, type SampleProduct } from "@/data/sampleProducts"
+
+// Transform sample products to match Product interface
+const transformSampleProducts = (samples: SampleProduct[]): Product[] => {
+  return samples.map(sample => ({
+    id: sample.id,
+    name: sample.name,
+    description: sample.description,
+    price_per_sqft: sample.variants[0]?.price_per_sqft || 0,
+    price_per_piece: sample.variants[0]?.price_per_piece || null,
+    images: sample.images,
+    category_id: sample.category.toLowerCase().replace(/\s+/g, '-'),
+    brand: sample.brand,
+    material: sample.material,
+    finish: sample.variants[0]?.finish || '',
+    dimensions: sample.variants[0]?.size || '',
+    is_featured: sample.is_featured
+  }))
+}
 
 interface Product {
   id: string
@@ -81,13 +100,14 @@ const Products = () => {
       const { data, error } = await query.order(sortBy)
 
       if (error) throw error
-      setProducts(data || [])
+      
+      // Use sample products as fallback when Supabase is empty
+      const productsData = data && data.length > 0 ? data : transformSampleProducts(sampleProducts)
+      setProducts(productsData)
     } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to load products"
-      })
+      console.log('Supabase fetch failed, using sample data:', error)
+      // Fallback to sample products on any error
+      setProducts(transformSampleProducts(sampleProducts))
     } finally {
       setLoading(false)
     }
