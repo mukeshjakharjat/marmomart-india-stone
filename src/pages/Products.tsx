@@ -240,11 +240,8 @@ const Products = () => {
                   key={product.id}
                   product={product}
                   viewMode={viewMode}
-                  onAddToCart={() => {
-                    toast({
-                      title: "Added to Cart",
-                      description: `${product.name} has been added to your cart`
-                    })
+                  onRequestQuote={() => {
+                    navigate(`/products/${product.id}`)
                   }}
                 />
               ))}

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ShoppingCart, Heart, Eye, Star } from "lucide-react"
+import { ShoppingCart, Heart, Eye, Star, MessageSquare } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 
 interface Product {
@@ -21,10 +21,10 @@ interface Product {
 interface ProductCardProps {
   product: Product
   viewMode: 'grid' | 'list'
-  onAddToCart: (product: Product) => void
+  onRequestQuote: (product: Product) => void
 }
 
-export function ProductCard({ product, viewMode, onAddToCart }: ProductCardProps) {
+export function ProductCard({ product, viewMode, onRequestQuote }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isFavorited, setIsFavorited] = useState(false)
   const navigate = useNavigate()
@@ -119,10 +119,10 @@ export function ProductCard({ product, viewMode, onAddToCart }: ProductCardProps
                   </Button>
                   <Button
                     size="sm"
-                    onClick={() => onAddToCart(product)}
+                    onClick={() => onRequestQuote(product)}
                   >
-                    <ShoppingCart className="h-4 w-4 mr-1" />
-                    Add to Cart
+                    <MessageSquare className="h-4 w-4 mr-1" />
+                    Get Quote
                   </Button>
                 </div>
               </div>
@@ -170,9 +170,9 @@ export function ProductCard({ product, viewMode, onAddToCart }: ProductCardProps
             </Button>
             <Button
               size="icon"
-              onClick={() => onAddToCart(product)}
+              onClick={() => onRequestQuote(product)}
             >
-              <ShoppingCart className="h-4 w-4" />
+              <MessageSquare className="h-4 w-4" />
             </Button>
           </div>
           
@@ -218,11 +218,10 @@ export function ProductCard({ product, viewMode, onAddToCart }: ProductCardProps
           
           <Button 
             className="w-full"
-            variant="outline"
-            onClick={() => onAddToCart(product)}
+            onClick={() => onRequestQuote(product)}
           >
-            <ShoppingCart className="h-4 w-4 mr-2" />
-            Add to Cart
+            <MessageSquare className="h-4 w-4 mr-2" />
+            Get Quote
           </Button>
         </div>
       </CardContent>

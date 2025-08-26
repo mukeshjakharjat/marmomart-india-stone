@@ -1,3 +1,11 @@
+// Sample products and variants data
+import carraraMarble1 from "@/assets/carrara-marble-1.jpg"
+import carraraMarble2 from "@/assets/carrara-marble-2.jpg"
+import rajnagarMarble1 from "@/assets/rajnagar-marble-1.jpg"
+import blackGalaxyGranite1 from "@/assets/black-galaxy-granite-1.jpg"
+import vitrifiedTiles1 from "@/assets/vitrified-tiles-1.jpg"
+import ceramicTiles1 from "@/assets/ceramic-tiles-1.jpg"
+
 export interface ProductVariant {
   id: string
   size: string
@@ -31,8 +39,8 @@ export const sampleProducts: SampleProduct[] = [
     brand: "MarmoMart Premium",
     material: "Italian Marble",
     images: [
-      "/placeholder.svg",
-      "/placeholder.svg",
+      carraraMarble1,
+      carraraMarble2,
       "/placeholder.svg"
     ],
     variants: [
@@ -107,7 +115,7 @@ export const sampleProducts: SampleProduct[] = [
     brand: "MarmoMart Select",
     material: "Indian Marble",
     images: [
-      "/placeholder.svg",
+      rajnagarMarble1,
       "/placeholder.svg",
       "/placeholder.svg"
     ],
@@ -183,7 +191,7 @@ export const sampleProducts: SampleProduct[] = [
     brand: "MarmoMart Premium",
     material: "Granite",
     images: [
-      "/placeholder.svg",
+      blackGalaxyGranite1,
       "/placeholder.svg",
       "/placeholder.svg"
     ],
@@ -259,7 +267,7 @@ export const sampleProducts: SampleProduct[] = [
     brand: "Kajaria",
     material: "Vitrified",
     images: [
-      "/placeholder.svg",
+      vitrifiedTiles1,
       "/placeholder.svg",
       "/placeholder.svg"
     ],
@@ -336,7 +344,7 @@ export const sampleProducts: SampleProduct[] = [
     brand: "Somany",
     material: "Ceramic",
     images: [
-      "/placeholder.svg",
+      ceramicTiles1,
       "/placeholder.svg",
       "/placeholder.svg"
     ],
