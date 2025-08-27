@@ -17,6 +17,14 @@ import ShippingPolicy from "./pages/ShippingPolicy";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 
+// Admin pages
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminProducts from "./pages/admin/Products";
+import AdminCategories from "./pages/admin/Categories";
+import AdminOrders from "./pages/admin/Orders";
+import AdminUsers from "./pages/admin/Users";
+import AdminQuotes from "./pages/admin/Quotes";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -38,6 +46,15 @@ const App = () => (
           <Route path="/shipping-policy" element={<ShippingPolicy />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          
+          {/* Admin routes */}
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/categories" element={<AdminCategories />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/quotes" element={<AdminQuotes />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
