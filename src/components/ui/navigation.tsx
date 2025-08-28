@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { 
@@ -16,21 +17,24 @@ import {
 } from "@/components/ui/sheet"
 import { ShoppingCart, User, Menu, Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
+import { supabase } from "@/integrations/supabase/client"
+import { UserMenu } from "@/components/ui/user-menu"
+import { useAuth } from "@/hooks/useAuth"
 
 interface NavigationProps {
-  isAuthenticated?: boolean
   onAuthClick: () => void
   onCartClick: () => void
   cartItemsCount?: number
 }
 
 export function Navigation({ 
-  isAuthenticated = false, 
   onAuthClick, 
   onCartClick,
   cartItemsCount = 0 
 }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { user, profile } = useAuth()
+
   return (
     <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -84,20 +88,8 @@ export function Navigation({
             </Button>
 
             {/* User Account */}
-            {isAuthenticated ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <User className="h-5 w-5" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Orders</DropdownMenuItem>
-                  <DropdownMenuItem>Addresses</DropdownMenuItem>
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+            {user ? (
+              <UserMenu user={user} profile={profile} />
             ) : (
               <Button onClick={onAuthClick}>Login</Button>
             )}
@@ -184,18 +176,16 @@ export function Navigation({
                     
                     {isAuthenticated ? (
                       <div className="space-y-2">
-                        <Button variant="ghost" className="w-full justify-start">
+                        <Button 
+                          variant="ghost" 
+                          className="w-full justify-start"
+                          onClick={() => {
+                            onAuthClick()
+                            setMobileMenuOpen(false)
+                          }}
+                        >
                           <User className="h-4 w-4 mr-2" />
-                          Profile
-                        </Button>
-                        <Button variant="ghost" className="w-full justify-start">
-                          Orders
-                        </Button>
-                        <Button variant="ghost" className="w-full justify-start">
-                          Addresses
-                        </Button>
-                        <Button variant="ghost" className="w-full justify-start text-destructive">
-                          Logout
+                          Dashboard
                         </Button>
                       </div>
                     ) : (

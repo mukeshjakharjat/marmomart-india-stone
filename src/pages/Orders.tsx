@@ -7,8 +7,8 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Eye, Package, Truck, CheckCircle, Clock, Calendar } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { useAuth } from "@/hooks/useAuth"
 import { supabase } from "@/integrations/supabase/client"
-import type { User, Session } from "@supabase/supabase-js"
 
 interface Order {
   id: string
@@ -31,30 +31,11 @@ interface Order {
 }
 
 const Orders = () => {
-  const [user, setUser] = useState<User | null>(null)
-  const [session, setSession] = useState<Session | null>(null)
+  const { user } = useAuth()
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   const { toast } = useToast()
-
-  useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session)
-        setUser(session?.user ?? null)
-      }
-    )
-
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
 
   useEffect(() => {
     if (user) {
@@ -128,7 +109,11 @@ const Orders = () => {
   }
 
   const handleAuthClick = () => {
-    navigate("/auth")
+    if (user) {
+      navigate("/dashboard")
+    } else {
+      navigate("/auth")
+    }
   }
 
   const handleCartClick = () => {
@@ -164,7 +149,6 @@ const Orders = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navigation 
-          isAuthenticated={false}
           onAuthClick={handleAuthClick}
           onCartClick={handleCartClick}
           cartItemsCount={0}
@@ -184,7 +168,6 @@ const Orders = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navigation 
-          isAuthenticated={!!user}
           onAuthClick={handleAuthClick}
           onCartClick={handleCartClick}
           cartItemsCount={0}
@@ -209,7 +192,6 @@ const Orders = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation 
-        isAuthenticated={!!user}
         onAuthClick={handleAuthClick}
         onCartClick={handleCartClick}
         cartItemsCount={0}

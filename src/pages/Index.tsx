@@ -6,34 +6,18 @@ import { FeaturedProducts } from "@/components/sections/FeaturedProducts"
 import { Categories } from "@/components/sections/Categories"
 import { Testimonials } from "@/components/sections/Testimonials"
 import { Footer } from "@/components/sections/Footer"
-import { supabase } from "@/integrations/supabase/client"
-import type { User, Session } from "@supabase/supabase-js"
+import { useAuth } from "@/hooks/useAuth"
 
 const Index = () => {
-  const [user, setUser] = useState<User | null>(null)
-  const [session, setSession] = useState<Session | null>(null)
+  const { user, loading } = useAuth()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session)
-        setUser(session?.user ?? null)
-      }
-    )
-
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-
   const handleAuthClick = () => {
-    navigate("/auth")
+    if (user) {
+      navigate("/dashboard")
+    } else {
+      navigate("/auth")
+    }
   }
 
   const handleCartClick = () => {

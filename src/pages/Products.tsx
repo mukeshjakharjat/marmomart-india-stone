@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Search, Grid, List } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { useToast } from "@/hooks/use-toast"
-import type { User, Session } from "@supabase/supabase-js"
+import { useAuth } from "@/hooks/useAuth"
 import { sampleProducts, type SampleProduct } from "@/data/sampleProducts"
 
 // Transform sample products to match Product interface
@@ -51,8 +51,7 @@ interface Category {
 }
 
 const Products = () => {
-  const [user, setUser] = useState<User | null>(null)
-  const [session, setSession] = useState<Session | null>(null)
+  const { user } = useAuth()
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
@@ -62,24 +61,6 @@ const Products = () => {
   const [sortBy, setSortBy] = useState("name")
   const navigate = useNavigate()
   const { toast } = useToast()
-
-  useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session)
-        setUser(session?.user ?? null)
-      }
-    )
-
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
 
   useEffect(() => {
     fetchProducts()
@@ -134,7 +115,11 @@ const Products = () => {
   )
 
   const handleAuthClick = () => {
-    navigate("/auth")
+    if (user) {
+      navigate("/dashboard")
+    } else {
+      navigate("/auth")
+    }
   }
 
   const handleCartClick = () => {
@@ -168,7 +153,6 @@ const Products = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation 
-        isAuthenticated={!!user}
         onAuthClick={handleAuthClick}
         onCartClick={handleCartClick}
         cartItemsCount={0}

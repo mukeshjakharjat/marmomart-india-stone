@@ -73,6 +73,7 @@ export default function Auth() {
           title: "Welcome back!",
           description: "Successfully logged in"
         })
+        navigate("/dashboard")
       }
     } catch (error: any) {
       toast({
@@ -137,6 +138,15 @@ export default function Auth() {
           title: "Account Created!",
           description: "Please check your email to verify your account"
         })
+        // Auto login after successful signup
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email: signupData.email,
+          password: signupData.password,
+        })
+        
+        if (!signInError) {
+          navigate("/dashboard")
+        }
       }
     } catch (error: any) {
       toast({

@@ -9,8 +9,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Separator } from "@/components/ui/separator"
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { useAuth } from "@/hooks/useAuth"
 import { supabase } from "@/integrations/supabase/client"
-import type { User, Session } from "@supabase/supabase-js"
 
 interface CartItem {
   id: string
@@ -24,8 +24,7 @@ interface CartItem {
 }
 
 const Cart = () => {
-  const [user, setUser] = useState<User | null>(null)
-  const [session, setSession] = useState<Session | null>(null)
+  const { user } = useAuth()
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [projectName, setProjectName] = useState("")
   const [projectAddress, setProjectAddress] = useState("")
@@ -34,26 +33,12 @@ const Cart = () => {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session)
-        setUser(session?.user ?? null)
-      }
-    )
-
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-
   const handleAuthClick = () => {
-    navigate("/auth")
+    if (user) {
+      navigate("/dashboard")
+    } else {
+      navigate("/auth")
+    }
   }
 
   const handleCartClick = () => {
@@ -202,8 +187,6 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation 
-        isAuthenticated={!!user}
         onAuthClick={handleAuthClick}
         onCartClick={handleCartClick}
         cartItemsCount={cartItems.length}
