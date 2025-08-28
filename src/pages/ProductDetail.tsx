@@ -9,7 +9,7 @@ import { ProductCustomization } from "@/components/ui/product-customization"
 import { QuoteRequest, type QuoteData } from "@/components/ui/quote-request"
 import { ArrowLeft, Ruler, Package, Truck, Star } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import type { User, Session } from "@supabase/supabase-js"
+import { useAuth } from "@/hooks/useAuth"
 import { sampleProducts, type SampleProduct, type ProductVariant } from "@/data/sampleProducts"
 
 const ProductDetail = () => {
@@ -17,30 +17,11 @@ const ProductDetail = () => {
   const navigate = useNavigate()
   const { toast } = useToast()
   
-  const [user, setUser] = useState<User | null>(null)
-  const [session, setSession] = useState<Session | null>(null)
+  const { user } = useAuth()
   const [sampleProduct, setSampleProduct] = useState<SampleProduct | null>(null)
   const [loading, setLoading] = useState(true)
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | undefined>()
-
-  useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session)
-        setUser(session?.user ?? null)
-      }
-    )
-
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
 
   useEffect(() => {
     if (id) {
@@ -88,7 +69,11 @@ const ProductDetail = () => {
   }
 
   const handleAuthClick = () => {
-    navigate("/auth")
+    if (user) {
+      navigate("/dashboard")
+    } else {
+      navigate("/auth")
+    }
   }
 
   const handleCartClick = () => {
@@ -113,7 +98,6 @@ const ProductDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navigation 
-          isAuthenticated={!!user}
           onAuthClick={handleAuthClick}
           onCartClick={handleCartClick}
           cartItemsCount={0}
@@ -146,7 +130,6 @@ const ProductDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navigation 
-          isAuthenticated={!!user}
           onAuthClick={handleAuthClick}
           onCartClick={handleCartClick}
           cartItemsCount={0}
@@ -169,7 +152,6 @@ const ProductDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation 
-        isAuthenticated={!!user}
         onAuthClick={handleAuthClick}
         onCartClick={handleCartClick}
         cartItemsCount={0}
