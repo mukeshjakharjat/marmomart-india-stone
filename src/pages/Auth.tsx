@@ -191,134 +191,175 @@ export default function Auth() {
           </CardHeader>
           <CardContent>
             {authMethod === 'email' ? (
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Login
-                  </Button>
-                </form>
-                  </TabsContent>
-
-                  <TabsContent value="signup" className="space-y-4">
-                <form onSubmit={handleSignup} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+              <Tabs defaultValue="login" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="login">Login</TabsTrigger>
+                  <TabsTrigger value="signup">Sign Up</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="login" className="space-y-4">
+                  <form onSubmit={handleLogin} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="signup-name">Full Name *</Label>
+                      <Label htmlFor="login-email">Email</Label>
                       <Input
-                        id="signup-name"
-                        placeholder="Your name"
-                        value={signupData.fullName}
-                        onChange={(e) => setSignupData({...signupData, fullName: e.target.value})}
+                        id="login-email"
+                        type="email"
+                        placeholder="Enter your email"
+                        value={loginData.email}
+                        onChange={(e) => setLoginData({...loginData, email: e.target.value})}
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="signup-phone">Phone *</Label>
+                      <Label htmlFor="login-password">Password</Label>
+                      <div className="relative">
+                        <Input
+                          id="login-password"
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Enter your password"
+                          value={loginData.password}
+                          onChange={(e) => setLoginData({...loginData, password: e.target.value})}
+                          required
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        </Button>
+                      </div>
+                    </div>
+                    <Button type="submit" className="w-full" disabled={loading}>
+                      {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      Login
+                    </Button>
+                  </form>
+                </TabsContent>
+
+                <TabsContent value="signup" className="space-y-4">
+                  <form onSubmit={handleSignup} className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-name">Full Name *</Label>
+                        <Input
+                          id="signup-name"
+                          placeholder="Your name"
+                          value={signupData.fullName}
+                          onChange={(e) => setSignupData({...signupData, fullName: e.target.value})}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-phone">Phone *</Label>
+                        <Input
+                          id="signup-phone"
+                          placeholder="Phone number"
+                          value={signupData.phone}
+                          onChange={(e) => setSignupData({...signupData, phone: e.target.value})}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="signup-email">Email *</Label>
                       <Input
-                        id="signup-phone"
-                        placeholder="Phone number"
-                        value={signupData.phone}
-                        onChange={(e) => setSignupData({...signupData, phone: e.target.value})}
+                        id="signup-email"
+                        type="email"
+                        placeholder="Enter your email"
+                        value={signupData.email}
+                        onChange={(e) => setSignupData({...signupData, email: e.target.value})}
                         required
                       />
                     </div>
-                  </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-email">Email *</Label>
-                    <Input
-                      id="signup-email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={signupData.email}
-                      onChange={(e) => setSignupData({...signupData, email: e.target.value})}
-                      required
-                    />
-                  </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-password">Password *</Label>
+                        <Input
+                          id="signup-password"
+                          type="password"
+                          placeholder="Create password"
+                          value={signupData.password}
+                          onChange={(e) => setSignupData({...signupData, password: e.target.value})}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="confirm-password">Confirm Password *</Label>
+                        <Input
+                          id="confirm-password"
+                          type="password"
+                          placeholder="Confirm password"
+                          value={signupData.confirmPassword}
+                          onChange={(e) => setSignupData({...signupData, confirmPassword: e.target.value})}
+                          required
+                        />
+                      </div>
+                    </div>
 
-                  <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="signup-password">Password *</Label>
+                      <Label htmlFor="business-name">Business Name</Label>
                       <Input
-                        id="signup-password"
-                        type="password"
-                        placeholder="Create password"
-                        value={signupData.password}
-                        onChange={(e) => setSignupData({...signupData, password: e.target.value})}
-                        required
+                        id="business-name"
+                        placeholder="Your business name"
+                        value={signupData.businessName}
+                        onChange={(e) => setSignupData({...signupData, businessName: e.target.value})}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="confirm-password">Confirm Password *</Label>
-                      <Input
-                        id="confirm-password"
-                        type="password"
-                        placeholder="Confirm password"
-                        value={signupData.confirmPassword}
-                        onChange={(e) => setSignupData({...signupData, confirmPassword: e.target.value})}
-                        required
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="business-type">Business Type</Label>
+                        <Select value={signupData.businessType} onValueChange={(value) => setSignupData({...signupData, businessType: value})}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="individual">Individual</SelectItem>
+                            <SelectItem value="retailer">Retailer</SelectItem>
+                            <SelectItem value="contractor">Contractor</SelectItem>
+                            <SelectItem value="architect">Architect</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="gst-number">GST Number</Label>
+                        <Input
+                          id="gst-number"
+                          placeholder="GST number"
+                          value={signupData.gstNumber}
+                          onChange={(e) => setSignupData({...signupData, gstNumber: e.target.value})}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="terms"
+                        checked={signupData.agreeTerms}
+                        onCheckedChange={(checked) => setSignupData({...signupData, agreeTerms: checked as boolean})}
                       />
+                      <Label htmlFor="terms" className="text-sm">
+                        I agree to the terms and conditions *
+                      </Label>
                     </div>
-                  </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="business-name">Business Name</Label>
-                    <Input
-                      id="business-name"
-                      placeholder="Your business name"
-                      value={signupData.businessName}
-                      onChange={(e) => setSignupData({...signupData, businessName: e.target.value})}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="business-type">Business Type</Label>
-                      <Select value={signupData.businessType} onValueChange={(value) => setSignupData({...signupData, businessType: value})}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="individual">Individual</SelectItem>
-                          <SelectItem value="retailer">Retailer</SelectItem>
-                          <SelectItem value="contractor">Contractor</SelectItem>
-                          <SelectItem value="architect">Architect</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="gst-number">GST Number</Label>
-                      <Input
-                        id="gst-number"
-                        placeholder="GST number"
-                        value={signupData.gstNumber}
-                        onChange={(e) => setSignupData({...signupData, gstNumber: e.target.value})}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id="terms"
-                      checked={signupData.agreeTerms}
-                      onCheckedChange={(checked) => setSignupData({...signupData, agreeTerms: checked as boolean})}
-                    />
-                    <Label htmlFor="terms" className="text-sm">
-                      I agree to the terms and conditions *
-                    </Label>
-                  </div>
-
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Create Account
-                  </Button>
-                </form>
-                  </TabsContent>
-                </Tabs>
+                    <Button type="submit" className="w-full" disabled={loading}>
+                      {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      Create Account
+                    </Button>
+                  </form>
+                </TabsContent>
+              </Tabs>
             ) : authMethod === 'whatsapp' ? (
-            ) : (
-              <AuthMethodSelector
-                  onBack={() => setAuthMethod('email')}
+              <WhatsAppOTPLogin
+                onBack={() => setAuthMethod('email')}
                 onSelectEmail={() => setAuthMethod('email')}
+              />
             ) : (
               <AuthMethodSelector
                 onSelectWhatsApp={() => setAuthMethod('whatsapp')}

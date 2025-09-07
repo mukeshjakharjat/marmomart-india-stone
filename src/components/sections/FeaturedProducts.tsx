@@ -34,37 +34,96 @@ export function FeaturedProducts() {
         .eq('is_active', true)
         .limit(6)
 
-      if (error) throw error
-      setProducts(data || [])
+      if (error || !data || data.length === 0) {
+        // Use fallback products for demo
+        setProducts([
+          {
+            id: 'carrara-white-marble',
+            name: 'Carrara White Italian Marble',
+            price_per_sqft: 450,
+            price_per_piece: null,
+            images: ['/placeholder.svg'],
+            brand: 'MarmoMart Premium',
+            material: 'Italian Marble'
+          },
+          {
+            id: 'rajnagar-pink-marble', 
+            name: 'Rajnagar Pink Indian Marble',
+            price_per_sqft: 180,
+            price_per_piece: null,
+            images: ['/placeholder.svg'],
+            brand: 'MarmoMart Select',
+            material: 'Indian Marble'
+          },
+          {
+            id: 'black-galaxy-granite',
+            name: 'Black Galaxy Granite',
+            price_per_sqft: 280,
+            price_per_piece: null,
+            images: ['/placeholder.svg'],
+            brand: 'MarmoMart Premium',
+            material: 'Granite'
+          },
+          {
+            id: 'vitrified-glossy-tile',
+            name: 'Premium Glossy Vitrified Tiles',
+            price_per_sqft: 85,
+            price_per_piece: null,
+            images: ['/placeholder.svg'],
+            brand: 'Kajaria',
+            material: 'Vitrified'
+          },
+          {
+            id: 'ceramic-wall-tile',
+            name: 'Designer Ceramic Wall Tiles',
+            price_per_sqft: 45,
+            price_per_piece: null,
+            images: ['/placeholder.svg'],
+            brand: 'Somany',
+            material: 'Ceramic'
+          },
+          {
+            id: 'porcelain-floor-tile',
+            name: 'Luxury Porcelain Floor Tiles',
+            price_per_sqft: 120,
+            price_per_piece: null,
+            images: ['/placeholder.svg'],
+            brand: 'Johnson',
+            material: 'Porcelain'
+          }
+        ])
+      } else {
+        setProducts(data)
+      }
     } catch (error) {
       console.error('Failed to load featured products:', error)
-      // Show fallback products for demo
+      // Fallback products on error
       setProducts([
         {
-          id: '1',
-          name: 'Carrara White Marble',
+          id: 'carrara-white-marble',
+          name: 'Carrara White Italian Marble',
           price_per_sqft: 450,
           price_per_piece: null,
           images: ['/placeholder.svg'],
-          brand: 'Kajaria',
+          brand: 'MarmoMart Premium',
           material: 'Italian Marble'
         },
         {
-          id: '2', 
-          name: 'Designer Ceramic Tiles',
-          price_per_piece: 125,
-          price_per_sqft: null,
-          images: ['/placeholder.svg'],
-          brand: 'Somany',
-          material: 'Ceramic'
-        },
-        {
-          id: '3',
-          name: 'Premium Granite Slab',
-          price_per_sqft: 350,
+          id: 'rajnagar-pink-marble',
+          name: 'Rajnagar Pink Indian Marble',
+          price_per_sqft: 180,
           price_per_piece: null,
           images: ['/placeholder.svg'],
-          brand: 'Johnson',
+          brand: 'MarmoMart Select',
+          material: 'Indian Marble'
+        },
+        {
+          id: 'black-galaxy-granite',
+          name: 'Black Galaxy Granite',
+          price_per_sqft: 280,
+          price_per_piece: null,
+          images: ['/placeholder.svg'],
+          brand: 'MarmoMart Premium',
           material: 'Granite'
         }
       ])
@@ -112,28 +171,28 @@ export function FeaturedProducts() {
   }
 
   return (
-    <section className="py-16 bg-muted/20">
+    <section className="py-20 bg-gradient-to-b from-background to-muted/20">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <Badge variant="secondary" className="mb-4">
+        <div className="text-center mb-16">
+          <Badge variant="secondary" className="mb-6 px-4 py-2">
             Premium Collection
           </Badge>
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6 tracking-tight">
             Featured Products
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-xl max-w-3xl mx-auto leading-relaxed">
             Discover our handpicked selection of premium marble and tiles, 
             carefully curated for exceptional quality and design.
           </p>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {products.map((product) => (
             <Card 
               key={product.id}
-              className="group hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
+              className="group hover:shadow-xl transition-all duration-500 overflow-hidden cursor-pointer border-0 bg-card/50 backdrop-blur"
               onClick={() => navigate(`/products/${product.id}`)}
             >
               <CardContent className="p-0">
@@ -141,56 +200,60 @@ export function FeaturedProducts() {
                   <img
                     src={getImageSrc(product.images)}
                     alt={product.name}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
                     onError={(e) => {
                       e.currentTarget.src = "/placeholder.svg"
                     }}
                   />
                   
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
                   {/* Hover Actions */}
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
                     <Button
-                      size="icon"
+                      size="sm"
+                      className="bg-white/90 text-black hover:bg-white shadow-lg"
                       onClick={(e) => {
                         e.stopPropagation()
-                        // Add to cart logic here
+                        navigate(`/products/${product.id}`)
                       }}
                     >
-                      <ShoppingCart className="h-4 w-4" />
+                      View Details
                     </Button>
                   </div>
                   
                   {/* Featured Badge */}
-                  <Badge className="absolute top-3 left-3" variant="secondary">
+                  <Badge className="absolute top-4 left-4 bg-primary/90 text-primary-foreground shadow-lg">
                     Featured
                   </Badge>
                 </div>
                 
-                <div className="p-4 space-y-3">
+                <div className="p-6 space-y-4">
                   <div>
-                    <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">
+                    <h3 className="font-bold text-xl group-hover:text-primary transition-colors mb-2">
                       {product.name}
                     </h3>
-                    <div className="flex gap-2 mt-1">
+                    <div className="flex gap-2 mb-3">
                       {product.brand && (
-                        <Badge variant="outline" className="text-xs">{product.brand}</Badge>
+                        <Badge variant="outline" className="text-xs px-2 py-1">{product.brand}</Badge>
                       )}
                       {product.material && (
-                        <Badge variant="outline" className="text-xs">{product.material}</Badge>
+                        <Badge variant="outline" className="text-xs px-2 py-1">{product.material}</Badge>
                       )}
                     </div>
                   </div>
                   
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-bold text-primary text-lg">{formatPrice(product)}</p>
+                      <p className="font-bold text-primary text-xl">{formatPrice(product)}</p>
                       <div className="flex items-center gap-1 mt-1">
                         <div className="flex items-center">
                           {Array.from({ length: 5 }).map((_, i) => (
-                            <Star key={i} className="h-3 w-3 fill-primary text-primary" />
+                            <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                           ))}
                         </div>
-                        <span className="text-xs text-muted-foreground">(4.8)</span>
+                        <span className="text-sm text-muted-foreground ml-1">(4.8)</span>
                       </div>
                     </div>
                   </div>
@@ -204,11 +267,11 @@ export function FeaturedProducts() {
         <div className="text-center">
           <Button 
             size="lg"
+            className="px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300 group"
             onClick={() => navigate('/products')}
-            className="group"
           >
             View All Products
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
           </Button>
         </div>
       </div>

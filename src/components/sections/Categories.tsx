@@ -62,28 +62,28 @@ export function Categories() {
   }
 
   return (
-    <section className="py-16 bg-background">
+    <section className="py-20 bg-gradient-to-b from-muted/20 to-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <Badge variant="secondary" className="mb-4">
+        <div className="text-center mb-16">
+          <Badge variant="secondary" className="mb-6 px-4 py-2">
             Explore Categories
           </Badge>
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6 tracking-tight">
             Shop by Category
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-xl max-w-3xl mx-auto leading-relaxed">
             From luxury marble to designer tiles, discover our extensive range 
             of premium materials for every project need.
           </p>
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((category) => (
             <Card 
               key={category.id}
-              className="group hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden"
+              className="group hover:shadow-xl transition-all duration-500 cursor-pointer overflow-hidden border-0 bg-card/50 backdrop-blur"
               onClick={() => handleCategoryClick(category.id)}
             >
               <CardContent className="p-0">
@@ -91,33 +91,33 @@ export function Categories() {
                   <img
                     src={category.image}
                     alt={category.name}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700"
                     onError={(e) => {
                       e.currentTarget.src = "/placeholder.svg"
                     }}
                   />
                   
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   
                   {/* Featured Badge */}
                   {category.featured && (
-                    <Badge className="absolute top-3 right-3" variant="secondary">
+                    <Badge className="absolute top-4 right-4 bg-primary/90 text-primary-foreground shadow-lg">
                       Popular
                     </Badge>
                   )}
                   
                   {/* Content Overlay */}
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <div className="absolute bottom-6 left-6 right-6 text-white">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-semibold text-lg mb-1">{category.name}</h3>
-                        <p className="text-sm text-white/80 mb-2">{category.description}</p>
-                        <Badge variant="outline" className="text-white border-white/30 bg-white/10">
+                        <h3 className="font-bold text-xl mb-2">{category.name}</h3>
+                        <p className="text-sm text-white/90 mb-3 leading-relaxed">{category.description}</p>
+                        <Badge variant="outline" className="text-white border-white/40 bg-white/20 backdrop-blur">
                           {category.productCount} Products
                         </Badge>
                       </div>
-                      <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
                     </div>
                   </div>
                 </div>
@@ -127,22 +127,29 @@ export function Categories() {
         </div>
 
         {/* Bottom Stats */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div>
-            <p className="text-3xl font-bold text-primary">2,800+</p>
-            <p className="text-muted-foreground">Total Products</p>
-          </div>
-          <div>
-            <p className="text-3xl font-bold text-primary">50+</p>
-            <p className="text-muted-foreground">Premium Brands</p>
-          </div>
-          <div>
-            <p className="text-3xl font-bold text-primary">25+</p>
-            <p className="text-muted-foreground">Years Experience</p>
-          </div>
-          <div>
-            <p className="text-3xl font-bold text-primary">5,000+</p>
-            <p className="text-muted-foreground">Happy Clients</p>
+        <div className="mt-20">
+          <Card className="border-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 shadow-lg">
+            <CardContent className="p-8">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div className="space-y-2">
+                  <p className="text-4xl font-bold text-primary">2,800+</p>
+                  <p className="text-muted-foreground font-medium">Total Products</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-4xl font-bold text-primary">50+</p>
+                  <p className="text-muted-foreground font-medium">Premium Brands</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-4xl font-bold text-primary">25+</p>
+                  <p className="text-muted-foreground font-medium">Years Experience</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-4xl font-bold text-primary">5,000+</p>
+                  <p className="text-muted-foreground font-medium">Happy Clients</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
           </div>
         </div>
       </div>

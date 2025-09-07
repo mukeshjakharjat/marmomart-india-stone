@@ -68,58 +68,58 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section className="py-16 bg-muted/20">
+    <section className="py-20 bg-gradient-to-b from-background to-muted/30">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <Badge variant="secondary" className="mb-4">
+        <div className="text-center mb-16">
+          <Badge variant="secondary" className="mb-6 px-4 py-2">
             Client Success Stories
           </Badge>
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6 tracking-tight">
             What Our Clients Say
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-xl max-w-3xl mx-auto leading-relaxed">
             Trusted by architects, contractors, and homeowners across India. 
             Here's what they say about their experience with MarmoMart.
           </p>
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {testimonials.map((testimonial) => (
-            <Card key={testimonial.id} className="hover:shadow-lg transition-shadow duration-300">
-              <CardContent className="p-6">
+            <Card key={testimonial.id} className="hover:shadow-xl transition-all duration-500 border-0 bg-card/50 backdrop-blur">
+              <CardContent className="p-8">
                 {/* Quote Icon */}
                 <div className="flex justify-between items-start mb-4">
-                  <Quote className="h-8 w-8 text-primary/20" />
+                  <Quote className="h-10 w-10 text-primary/30" />
                   <div className="flex items-center gap-1">
                     {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                      <Star key={i} className="h-5 w-5 fill-primary text-primary" />
                     ))}
                   </div>
                 </div>
 
                 {/* Comment */}
-                <p className="text-muted-foreground mb-6 leading-relaxed">
+                <p className="text-muted-foreground mb-6 leading-relaxed text-base">
                   "{testimonial.comment}"
                 </p>
 
                 {/* Project Tag */}
-                <Badge variant="outline" className="mb-4 text-xs">
+                <Badge variant="outline" className="mb-6 text-xs px-3 py-1">
                   {testimonial.project}
                 </Badge>
 
                 {/* Author Info */}
-                <div className="flex items-center gap-3">
-                  <Avatar className="h-12 w-12">
+                <div className="flex items-center gap-4">
+                  <Avatar className="h-14 w-14 border-2 border-primary/20">
                     <AvatarImage src={testimonial.image} alt={testimonial.name} />
                     <AvatarFallback>
                       {testimonial.name.split(' ').map(n => n[0]).join('')}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-semibold text-foreground">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="font-bold text-foreground text-base">{testimonial.name}</p>
+                    <p className="text-sm text-muted-foreground font-medium">
                       {testimonial.role}, {testimonial.company}
                     </p>
                   </div>
@@ -130,10 +130,37 @@ export function Testimonials() {
         </div>
 
         {/* Trust Indicators */}
-        <div className="bg-card border rounded-xl p-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="flex items-center justify-center mb-2">
+        <Card className="border-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 shadow-xl">
+          <CardContent className="p-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div className="space-y-3">
+                <div className="flex items-center justify-center mb-3">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-6 w-6 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-3xl font-bold text-primary">4.9/5</p>
+                <p className="text-sm text-muted-foreground font-medium">Average Rating</p>
+              </div>
+              <div className="space-y-3">
+                <p className="text-3xl font-bold text-primary">2,500+</p>
+                <p className="text-sm text-muted-foreground font-medium">Customer Reviews</p>
+              </div>
+              <div className="space-y-3">
+                <p className="text-3xl font-bold text-primary">98%</p>
+                <p className="text-sm text-muted-foreground font-medium">Satisfaction Rate</p>
+              </div>
+              <div className="space-y-3">
+                <p className="text-3xl font-bold text-primary">10,000+</p>
+                <p className="text-sm text-muted-foreground font-medium">Projects Completed</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  )
+}
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-primary text-primary" />
                 ))}
