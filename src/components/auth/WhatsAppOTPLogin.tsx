@@ -82,6 +82,7 @@ export function WhatsAppOTPLogin({ onSuccess, onBack }: WhatsAppOTPLoginProps) {
         } else {
           // New user, show profile form
           setStep('profile')
+        }
       }
     }
       }
@@ -131,6 +132,7 @@ export function WhatsAppOTPLogin({ onSuccess, onBack }: WhatsAppOTPLoginProps) {
         title: "Registration Failed",
         description: error.message || "Failed to create account"
       })
+    }
   }
 
   return (
@@ -225,7 +227,6 @@ export function WhatsAppOTPLogin({ onSuccess, onBack }: WhatsAppOTPLoginProps) {
                     <option value="retailer">Retailer</option>
                     <option value="contractor">Contractor</option>
                     <option value="architect">Architect</option>
-                  </select>
                   </select>
                 </div>
                 <div className="space-y-2">
