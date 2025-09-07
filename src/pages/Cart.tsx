@@ -187,6 +187,8 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navigation 
+        isAuthenticated={!!user}
         onAuthClick={handleAuthClick}
         onCartClick={handleCartClick}
         cartItemsCount={cartItems.length}
