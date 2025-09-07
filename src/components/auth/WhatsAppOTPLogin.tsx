@@ -10,7 +10,6 @@ import { useToast } from "@/hooks/use-toast"
 import { supabase } from "@/integrations/supabase/client"
 import { PhoneNumberInput } from "./PhoneNumberInput"
 import { OTPVerification } from "./OTPVerification"
-import { WhatsAppFeatures } from "@/components/ui/whatsapp-features"
 import { useWhatsAppAuth } from "@/hooks/useWhatsAppAuth"
 
 interface WhatsAppOTPLoginProps {
@@ -256,13 +255,6 @@ export function WhatsAppOTPLogin({ onSuccess, onBack }: WhatsAppOTPLoginProps) {
                 )}
               </Button>
             </div>
-          </>
-        )}
-
-        {step === 'phone' && (
-          <>
-            <Separator />
-            <WhatsAppFeatures />
           </>
         )}
       </CardContent>
