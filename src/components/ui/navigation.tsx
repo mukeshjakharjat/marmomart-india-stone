@@ -25,12 +25,14 @@ interface NavigationProps {
   onAuthClick: () => void
   onCartClick: () => void
   cartItemsCount?: number
+  isAuthenticated?: boolean
 }
 
 export function Navigation({ 
   onAuthClick, 
   onCartClick,
-  cartItemsCount = 0 
+  cartItemsCount = 0,
+  isAuthenticated = false
 }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { user, profile } = useAuth()
