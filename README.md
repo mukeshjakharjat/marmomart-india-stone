@@ -59,6 +59,44 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Supabase (Database & Authentication)
+- WhatsApp Business API Integration
+
+## WhatsApp OTP Integration
+
+This project includes WhatsApp OTP login functionality using Facebook's WhatsApp Business API.
+
+### Setup Instructions:
+
+1. **Facebook Business Account Setup:**
+   - Create a Facebook Business account
+   - Set up WhatsApp Business API
+   - Get your Phone Number ID and Access Token
+
+2. **Message Template Creation:**
+   - Create an OTP message template in Facebook Business Manager
+   - Template name: `marmomart_otp_template`
+   - Template content: "Your MarmoMart verification code is {{1}}. Valid for 10 minutes. Do not share this code."
+
+3. **Environment Variables:**
+   ```
+   WHATSAPP_ACCESS_TOKEN=your_access_token
+   WHATSAPP_PHONE_NUMBER_ID=your_phone_number_id
+   WHATSAPP_VERIFY_TOKEN=your_verify_token
+   ```
+
+4. **Webhook Setup:**
+   - Configure webhook URL in Facebook Developer Console
+   - Handle incoming message status updates
+   - Verify webhook with your verify token
+
+### Features:
+- **Secure OTP Delivery:** Uses WhatsApp's end-to-end encryption
+- **Template Management:** Integrates with Facebook approved templates
+- **Session Management:** Secure OTP session handling
+- **User Experience:** Seamless login flow with countdown timers
+- **Fallback Support:** Email login option available
+- **Order Notifications:** Future WhatsApp order updates integration
 
 ## How can I deploy this project?
 

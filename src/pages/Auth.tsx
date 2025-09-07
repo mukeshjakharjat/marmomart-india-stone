@@ -7,6 +7,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
+import { WhatsAppOTPLogin } from "@/components/auth/WhatsAppOTPLogin"
+import { AuthMethodSelector } from "@/components/auth/AuthMethodSelector"
+import { AuthMethodSelector } from "@/components/auth/AuthMethodSelector"
 import { supabase } from "@/integrations/supabase/client"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react"
@@ -14,6 +17,7 @@ import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react"
 export default function Auth() {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [authMethod, setAuthMethod] = useState<'email' | 'whatsapp'>('email')
   const [user, setUser] = useState(null)
   const navigate = useNavigate()
   const { toast } = useToast()
@@ -182,61 +186,19 @@ export default function Auth() {
           <CardHeader>
             <CardTitle>Welcome</CardTitle>
             <CardDescription>
-              Login to your account or create a new one
+              Choose your preferred login method
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="login" className="space-y-4">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login">Login</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="login" className="space-y-4">
-                <form onSubmit={handleLogin} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="login-email">Email</Label>
-                    <Input
-                      id="login-email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={loginData.email}
-                      onChange={(e) => setLoginData({...loginData, email: e.target.value})}
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="login-password">Password</Label>
-                    <div className="relative">
-                      <Input
-                        id="login-password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Enter your password"
-                        value={loginData.password}
-                        onChange={(e) => setLoginData({...loginData, password: e.target.value})}
-                        required
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                      </Button>
-                    </div>
-                  </div>
-
+            {authMethod === 'email' ? (
                   <Button type="submit" className="w-full" disabled={loading}>
                     {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     Login
                   </Button>
                 </form>
-              </TabsContent>
+                  </TabsContent>
 
-              <TabsContent value="signup" className="space-y-4">
+                  <TabsContent value="signup" className="space-y-4">
                 <form onSubmit={handleSignup} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -350,8 +312,19 @@ export default function Auth() {
                     Create Account
                   </Button>
                 </form>
-              </TabsContent>
-            </Tabs>
+                  </TabsContent>
+                </Tabs>
+            ) : authMethod === 'whatsapp' ? (
+            ) : (
+              <AuthMethodSelector
+                  onBack={() => setAuthMethod('email')}
+                onSelectEmail={() => setAuthMethod('email')}
+            ) : (
+              <AuthMethodSelector
+                onSelectWhatsApp={() => setAuthMethod('whatsapp')}
+                onSelectEmail={() => setAuthMethod('email')}
+              />
+            )}
           </CardContent>
         </Card>
       </div>
