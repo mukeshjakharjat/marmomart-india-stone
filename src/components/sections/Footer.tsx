@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { 
   MapPin, 
@@ -112,8 +113,8 @@ export function Footer() {
               <div className="flex items-center gap-4">
                 <Phone className="h-4 w-4 text-primary" />
                 <div className="text-sm">
-                  <a href="tel:+911234567890" className="text-muted-foreground hover:text-primary font-medium">
-                    +91 12345 67890
+                  <a href="tel:+919876543210" className="text-muted-foreground hover:text-primary font-medium">
+                    +91 98765 43210
                   </a>
                 </div>
               </div>
@@ -151,16 +152,16 @@ export function Footer() {
             <div className="text-center mb-8">
               <h4 className="font-bold text-2xl mb-3">Stay Updated</h4>
               <p className="text-muted-foreground text-lg">
-              Subscribe to our newsletter for latest product updates, design trends, and exclusive offers.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <Input 
-              placeholder="Enter your email"
+                Subscribe to our newsletter for latest product updates, design trends, and exclusive offers.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <Input 
+                placeholder="Enter your email"
                 className="flex-1 h-12 text-base"
-              className="flex-1"
+              />
               <Button size="lg" className="px-8">Subscribe</Button>
-            <Button>Subscribe</Button>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -205,6 +206,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
   )
 }

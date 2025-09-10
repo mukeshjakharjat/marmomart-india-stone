@@ -2,22 +2,14 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { 
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { 
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { ShoppingCart, User, Menu, Search } from "lucide-react"
+import { ShoppingCart, User, Menu, Search, Phone } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { supabase } from "@/integrations/supabase/client"
 import { UserMenu } from "@/components/ui/user-menu"
 import { useAuth } from "@/hooks/useAuth"
 
@@ -43,22 +35,34 @@ export function Navigation({
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold text-primary">MarmoMart</h1>
-            <Badge variant="secondary" className="hidden sm:inline-flex">
+            <a href="/" className="flex items-center space-x-2">
+              <h1 className="text-2xl font-bold text-primary">MarmoMart</h1>
+            </a>
+            <Badge variant="secondary" className="hidden sm:inline-flex text-xs">
               Premium Marble & Tiles
             </Badge>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <a href="/products" className="text-foreground hover:text-primary transition-colors">Marble</a>
-            <a href="/products" className="text-foreground hover:text-primary transition-colors">Ceramic Tiles</a>
-            <a href="/products" className="text-foreground hover:text-primary transition-colors">Porcelain</a>
-            <a href="/products" className="text-foreground hover:text-primary transition-colors">Decorative</a>
-            <a href="/products" className="text-foreground hover:text-primary transition-colors">Natural Stone</a>
+            <a href="/products?category=marble" className="text-foreground hover:text-primary transition-colors font-medium">
+              Marble
+            </a>
+            <a href="/products?category=ceramic" className="text-foreground hover:text-primary transition-colors font-medium">
+              Ceramic
+            </a>
+            <a href="/products?category=porcelain" className="text-foreground hover:text-primary transition-colors font-medium">
+              Porcelain
+            </a>
+            <a href="/products?category=granite" className="text-foreground hover:text-primary transition-colors font-medium">
+              Granite
+            </a>
+            <a href="/products" className="text-foreground hover:text-primary transition-colors font-medium">
+              All Products
+            </a>
           </nav>
 
-          {/* Search Bar */}
+          {/* Search Bar - Desktop Only */}
           <div className="flex-1 max-w-sm mx-4 hidden md:block">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -70,7 +74,19 @@ export function Navigation({
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 md:space-x-4">
+            {/* Emergency Contact - Mobile */}
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="md:hidden"
+              asChild
+            >
+              <a href="tel:+919876543210">
+                <Phone className="h-5 w-5" />
+              </a>
+            </Button>
+
             {/* Cart */}
             <Button 
               variant="ghost" 
@@ -93,7 +109,9 @@ export function Navigation({
             {user ? (
               <UserMenu user={user} profile={profile} />
             ) : (
-              <Button onClick={onAuthClick}>Login</Button>
+              <Button onClick={onAuthClick} size="sm" className="hidden md:flex">
+                Login
+              </Button>
             )}
 
             {/* Mobile Menu */}
@@ -105,7 +123,7 @@ export function Navigation({
               </SheetTrigger>
               <SheetContent side="right" className="w-80">
                 <SheetHeader>
-                  <SheetTitle>MarmoMart</SheetTitle>
+                  <SheetTitle className="text-left">MarmoMart</SheetTitle>
                 </SheetHeader>
                 
                 <div className="mt-6 space-y-6">
@@ -125,39 +143,62 @@ export function Navigation({
                     </h3>
                     <div className="space-y-2">
                       <a 
-                        href="/products" 
-                        className="block py-2 text-foreground hover:text-primary transition-colors"
+                        href="/products?category=marble" 
+                        className="block py-3 px-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-lg transition-colors font-medium"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Marble
+                        Italian & Indian Marble
                       </a>
                       <a 
-                        href="/products" 
-                        className="block py-2 text-foreground hover:text-primary transition-colors"
+                        href="/products?category=ceramic" 
+                        className="block py-3 px-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-lg transition-colors font-medium"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         Ceramic Tiles
                       </a>
                       <a 
-                        href="/products" 
-                        className="block py-2 text-foreground hover:text-primary transition-colors"
+                        href="/products?category=porcelain" 
+                        className="block py-3 px-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-lg transition-colors font-medium"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Porcelain
+                        Porcelain Tiles
+                      </a>
+                      <a 
+                        href="/products?category=granite" 
+                        className="block py-3 px-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-lg transition-colors font-medium"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Granite & Natural Stone
                       </a>
                       <a 
                         href="/products" 
+                        className="block py-3 px-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-lg transition-colors font-medium"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        View All Products
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Quick Links */}
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                      Quick Links
+                    </h3>
+                    <div className="space-y-2">
+                      <a 
+                        href="/about" 
                         className="block py-2 text-foreground hover:text-primary transition-colors"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Decorative
+                        About Us
                       </a>
                       <a 
-                        href="/products" 
+                        href="/contact" 
                         className="block py-2 text-foreground hover:text-primary transition-colors"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Natural Stone
+                        Contact
                       </a>
                     </div>
                   </div>
@@ -176,7 +217,7 @@ export function Navigation({
                       Cart ({cartItemsCount})
                     </Button>
                     
-                    {isAuthenticated ? (
+                    {user ? (
                       <div className="space-y-2">
                         <Button 
                           variant="ghost" 
@@ -198,9 +239,21 @@ export function Navigation({
                         }}
                         className="w-full"
                       >
-                        Login
+                        Login / Sign Up
                       </Button>
                     )}
+
+                    {/* Emergency Contact */}
+                    <Button 
+                      variant="outline"
+                      className="w-full justify-start"
+                      asChild
+                    >
+                      <a href="tel:+919876543210">
+                        <Phone className="h-4 w-4 mr-2" />
+                        Call: +91 98765 43210
+                      </a>
+                    </Button>
                   </div>
                 </div>
               </SheetContent>
